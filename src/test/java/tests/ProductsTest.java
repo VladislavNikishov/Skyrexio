@@ -8,6 +8,7 @@ import java.util.List;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.AssertJUnit.assertTrue;
+import static user.UserFactory.withAdminPermission;
 
 public class ProductsTest extends BaseTest {
     List<String> goodsList = new ArrayList<>(
@@ -15,13 +16,20 @@ public class ProductsTest extends BaseTest {
 
     @Test
     public void checkGoodsAdded() {
+        System.out.println("ProductsTest.incorrect !!!!! in thread: " + Thread.currentThread().getId());
+
         loginPage.open();
-        loginPage.login("standard_user","secret_sauce");
+        loginPage.login(withAdminPermission());
         assertEquals(productsPage.checkTitleName(), "Products");
         assertTrue(productsPage.isTitleIsDisplayed());
-        for (int i=0; i < goodsList.size(); i++) {
-            productsPage.addGoodsToCart(goodsList.get(i));
+
+        for (String goods : goodsList) {
+            productsPage.addGoodsToCart(goods);
         }
+
+//        for (int i=0; i < goodsList.size(); i++) {
+//            productsPage.addGoodsToCart(goodsList.get(i));
+//        }
 
         assertEquals(productsPage.checkCounterValue(), "3");
         assertEquals(productsPage.checkCounterColor(), "rgba(226, 35, 26, 1)");
