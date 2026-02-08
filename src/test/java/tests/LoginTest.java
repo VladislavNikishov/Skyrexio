@@ -38,7 +38,6 @@ public class LoginTest extends BaseTest {
         loginPage.login(user, password);
 
         assertTrue(loginPage.isErrorDisplayed(), "Нет сообщения об ошибке");
-        // AllureUtils.takeScreenshot(driver);
         assertEquals(loginPage.getErrorText(), errorMSg,
                 "Не верный текст сообщения об ошибке");
     }
