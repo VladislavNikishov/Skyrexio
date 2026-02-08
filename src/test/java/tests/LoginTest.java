@@ -3,8 +3,7 @@ package tests;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.sql.SQLOutput;
-
+import static enums.TitleNaming.PRODUCTS;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 import static user.UserFactory.*;
@@ -18,7 +17,7 @@ public class LoginTest extends BaseTest {
         loginPage.login(withAdminPermission());
 
         assertTrue(productsPage.isTitleIsDisplayed(), "Заголовок не виден");
-        assertEquals(productsPage.checkTitleName(), "Products", "Не верный заголовок");
+        assertEquals(productsPage.checkTitleName(), PRODUCTS.getDisplayName(), "Не верный заголовок");
     }
 
     @DataProvider(name = "incorrectLoginData")
@@ -39,6 +38,7 @@ public class LoginTest extends BaseTest {
         loginPage.login(user, password);
 
         assertTrue(loginPage.isErrorDisplayed(), "Нет сообщения об ошибке");
+        // AllureUtils.takeScreenshot(driver);
         assertEquals(loginPage.getErrorText(), errorMSg,
                 "Не верный текст сообщения об ошибке");
     }

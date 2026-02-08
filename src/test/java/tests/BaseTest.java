@@ -1,32 +1,30 @@
 package tests;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.qameta.allure.testng.AllureTestNg;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
+import org.testng.ITestContext;
+import org.testng.annotations.*;
 import pages.CartPage;
 import pages.LoginPage;
 import pages.ProductsPage;
-import utils.PropertyReader;
-
+import utils.TestListener;
 import java.time.Duration;
-import java.util.Properties;
 
+@Listeners({AllureTestNg.class, TestListener.class})
 public class BaseTest {
     public WebDriver driver;
     LoginPage loginPage;
     ProductsPage productsPage;
     CartPage cartPage;
 
-    @Parameters ({"browser"})
+    @Parameters({"browser"})
     @BeforeMethod
-    public void setup(@Optional("chrome") String browser) {
-        if(browser.equalsIgnoreCase("chrome")) {
+    public void setup(@Optional("chrome") String browser, ITestContext context) {
+        if (browser.equalsIgnoreCase("chrome")) {
             WebDriverManager.chromedriver().setup();
             ChromeOptions options = new ChromeOptions();
             options.addArguments("start-maximized");
@@ -40,6 +38,7 @@ public class BaseTest {
         }
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(6));
+        context.setAttribute("driver", driver);
         loginPage = new LoginPage(driver);
         productsPage = new ProductsPage(driver);
         cartPage = new CartPage(driver);

@@ -1,12 +1,9 @@
 package tests;
 
 import org.testng.annotations.Test;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
 import static org.testng.AssertJUnit.assertTrue;
 import static user.UserFactory.withAdminPermission;
 

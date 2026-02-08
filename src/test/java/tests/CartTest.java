@@ -2,6 +2,8 @@ package tests;
 
 import org.testng.annotations.Test;
 
+import static enums.TitleNaming.CART;
+import static enums.TitleNaming.PRODUCTS;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.AssertJUnit.assertTrue;
@@ -16,12 +18,12 @@ public class CartTest extends BaseTest {
 
         loginPage.open();
         loginPage.login(withAdminPermission());
-        assertEquals(productsPage.checkTitleName(), "Products");
+        assertEquals(productsPage.checkTitleName(), PRODUCTS.getDisplayName());
 
         productsPage.addGoodsToCart(goodsName);
         productsPage.switchToCart();
 
-        assertEquals(cartPage.checkTitleName(), "Your Cart");
+        assertEquals(cartPage.checkTitleName(), CART.getDisplayName());
         assertEquals(cartPage.getProductsNames().size(), 1);
         assertFalse(cartPage.getProductsNames().isEmpty());
         assertTrue(cartPage.getProductsNames().contains(goodsName));
